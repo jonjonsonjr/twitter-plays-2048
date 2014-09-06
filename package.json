@@ -1,0 +1,17 @@
+{
+  "name": "twitterplays2048",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.3.5",
+    "socket.io": "^1.1.0",
+    "twitter": "^0.2.9"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.2.x"
+  }
+}
