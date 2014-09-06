@@ -62,7 +62,7 @@ function getNextTweet() {
     });
 
     tweets.filter(function (t) {
-      return t !== "false";
+      return t !== "false" && t.text && t.user && t.dir;
     });
 
     currentTweet = tweets.pop();

@@ -120,6 +120,9 @@
     var socket = io.connect('http://twitterplays2048.herokuapp.com/');
     socket.on('update', function (data) {
       var text = data.text;
+
+      if (!text) return;
+
       var start = text.substring(0, data.start);
       var original = text.substring(data.start, data.start + data.dir.length);
       var end = text.substring(data.start + data.dir.length);
