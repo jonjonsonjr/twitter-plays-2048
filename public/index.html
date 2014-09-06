@@ -27,8 +27,8 @@
     </div>
 
     <div class="above-game">
-      <p class="game-intro">Join the numbers and get to the <strong>2048 tile!</strong></p>
       <a class="restart-button">New Game</a>
+      <a id="pause" class="pause-button">Pause</a>
     </div>
 
     <div id="tweets">
@@ -106,16 +106,19 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script>
+    var username = document.getElementById('username');
+    var tweet = document.getElementById('tweet');
+    var pauseButton = document.getElementById('pause');
+    var paused = false;
     var dirs = {
       'up': 0,
       'right': 1,
       'down': 2,
       'left': 3
     };
+
     var socket = io.connect('http://twitterplays2048.herokuapp.com/');
     socket.on('update', function (data) {
-      var username = document.getElementById('username');
-      var tweet = document.getElementById('tweet');
       var text = data.text;
       var start = text.substring(0, data.start);
       var original = text.substring(data.start, data.start + data.dir.length);
@@ -127,9 +130,40 @@
       console.log(data);
     });
 
-    setInterval(function () {
+    setTimeout(function () {
+      // gameManager not defined if I don't do this meh
+      gameManager.onLose = function () {
+        pause();
+      };
+    }, 2000);
+
+    var interval = setInterval(function () {
       socket.emit('poll');
     }, 2000);
+
+    $('#pause').click(function () {
+      if (paused) {
+        resume();
+      } else {
+        pause();
+      }
+
+      return false;
+    });
+
+    function pause() {
+      clearInterval(interval);
+      pauseButton.innerHTML = 'Resume';
+      paused = true;
+    }
+
+    function resume() {
+      interval = setInterval(function () {
+        socket.emit('poll');
+      }, 2000);
+      pauseButton.innerHTML = 'Pause';
+      paused = false;
+    }
   </script>
 </body>
 </html>

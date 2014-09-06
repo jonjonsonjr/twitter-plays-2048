@@ -184,6 +184,10 @@ GameManager.prototype.move = function (direction) {
 
     if (!this.movesAvailable()) {
       this.over = true; // Game over!
+
+      if (this.onLose) {
+        this.onLose();
+      }
     }
 
     this.actuate();
