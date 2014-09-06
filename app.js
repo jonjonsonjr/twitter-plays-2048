@@ -13,6 +13,12 @@ var twit = new twitter({
 
 var tweets = [];
 var currentTweet = "";
+var movesHistogram = {
+  up: 0,
+  down: 0,
+  left: 0,
+  right: 0
+};
 
 // all environments
 var app = express();
@@ -30,6 +36,7 @@ var server = http.createServer(app).listen(app.get('port'), function () {
 var io = require('socket.io').listen(server);
 io.sockets.on('connection', function (socket) {
   socket.on('poll', function (data) {
+    currentTweet.histogram = movesHistogram;
     socket.emit('update', currentTweet);
   });
 });
@@ -39,6 +46,7 @@ setInterval(getNextTweet, 2000);
 function getNextTweet() {
   if (tweets.length > 0) {
     currentTweet = tweets.pop();
+    updateHistogram();
     return;
   }
 
@@ -66,7 +74,14 @@ function getNextTweet() {
     });
 
     currentTweet = tweets.pop();
+    updateHistogram();
   });
+}
+
+function updateHistogram() {
+  if (!currentTweet.dir) return;
+
+  movesHistogram[currentTweet.dir]++;
 }
 
 function findText(text) {
