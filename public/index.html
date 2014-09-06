@@ -112,7 +112,7 @@
       'down': 2,
       'left': 3
     };
-    var socket = io.connect('http://localhost');
+    var socket = io.connect('http://twitterplays2048.herokuapp.com/');
     socket.on('update', function (data) {
       var username = document.getElementById('username');
       var tweet = document.getElementById('tweet');
