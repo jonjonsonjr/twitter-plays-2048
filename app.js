@@ -5,10 +5,10 @@ var path = require('path');
 var util = require('util');
 var twitter = require('twitter');
 var twit = new twitter({
-  consumer_key: 'Rj2NfrALS1yS15XAvNp4llrfj',
-  consumer_secret: 'sYkwRzzPRnEg1simeUdnB8ZYwKYXgdxdnhv34SXNrurpfMRe52',
-  access_token_key: '100691776-P2GXqBN1OV1N80Q3jmBevydjxnDCrGxeQ5NLLIop',
-  access_token_secret: 'QrQeLhNMq5vSffMvuHV7s5L8a670OvqNRuYPnecXWJKXA'
+  consumer_key: process.env.CONSUMER_KEY,
+  consumer_secret: process.env.CONSUMER_SECRET,
+  access_token_key: process.env.ACCESS_TOKEN_KEY,
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET
 });
 
 var tweets = [];
